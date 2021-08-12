@@ -20,13 +20,16 @@ class SalonController extends Controller
             'buscar' => 'string|max:20'
         ]);
 
-        if($validacion->fails()){
+        if($validacion->fails())
+        {
             return response(['errors' => $validacion->errors()->all()], 422);
         }
 
-        if($request->buscar == ''){
+        if($request->buscar == '')
+        {
             $salones = Salon::all();
-        }else{
+        }else
+        {
             $salones = Salon::where('nombre','like',$request->buscar.'%')->get();
         }
 
@@ -45,7 +48,8 @@ class SalonController extends Controller
     {
         $validacion = Validator::make($request->all(),Salon::$rules);
 
-        if($validacion->fails()){
+        if($validacion->fails())
+        {
             return response(['errors' => $validacion->errors()->all()], 422);
         }
 
@@ -93,7 +97,8 @@ class SalonController extends Controller
     {
         $validacion = Validator::make($request->all(),Salon::$rules);
 
-        if($validacion->fails()){
+        if($validacion->fails())
+        {
             return response(['errors' => $validacion->errors()->all()], 422);
         }
 
