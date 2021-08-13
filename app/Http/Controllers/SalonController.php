@@ -61,7 +61,7 @@ class SalonController extends Controller
         $salon->save();
 
         return response()->json([
-            'message' => 'El salon '.$request->nombre.' fue registrado con exito',
+            'message' => "El salon $request->nombre fue registrado con exito",
         ],201);
     }
 
@@ -118,8 +118,8 @@ class SalonController extends Controller
         $salon->save();
 
         return response()->json([
-            'message' => 'El salon '.$request->nombre.' fue actualizado',
-        ],201);
+            'message' => "El salon $request->nombre fue actualizado",
+        ],200);
     }
 
     /**
@@ -144,7 +144,7 @@ class SalonController extends Controller
         $salon->delete();
 
         return response()->json([
-            'message' => 'El salón '.$nombre_salon.' fue eliminado',
-        ],201);
+            'message' => "El salón $nombre_salon fue eliminado",
+        ],200);
     }
 }

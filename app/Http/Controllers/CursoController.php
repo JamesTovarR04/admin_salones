@@ -48,7 +48,7 @@ class CursoController extends Controller
     {
         $validacion = Validator::make($request->all(), Curso::$rules);
 
-        if ($validacion->fails()) 
+        if ($validacion->fails())
         {
             return response(['errors' => $validacion->errors()->all()], 422);
         }
@@ -62,7 +62,7 @@ class CursoController extends Controller
         $curso->save();
 
         return response()->json([
-            'message' => 'El curso de ' . $request->nombre . ' fue registrado con exito',
+            'message' => "El curso de $request->nombre fue registrado con exito",
         ], 201);
     }
 
@@ -118,8 +118,8 @@ class CursoController extends Controller
         $curso->save();
 
         return response()->json([
-            'message' => 'El curso de ' . $request->nombre . ' fue actualizado',
-        ], 201);
+            'message' => "El curso $request->nombre fue actualizado",
+        ], 200);
     }
 
     /**
@@ -143,7 +143,7 @@ class CursoController extends Controller
         $curso->delete();
 
         return response()->json([
-            'message' => 'El curso ' . $nombre_curso . ' fue eliminado',
-        ], 201);
+            'message' => "El curso $nombre_curso fue eliminado",
+        ], 200);
     }
 }
