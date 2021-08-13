@@ -11,7 +11,7 @@ class Salon extends Model
     protected $primaryKey = 'id_salon';
 
     public static $rules = [
-        'nombre' => 'required|string|unique:salones,nombre|max:20',
+        'nombre' => 'required|string|unique:salones,nombre|max:45',
         'max_estudiantes' => 'required|Integer',
     ];
 
