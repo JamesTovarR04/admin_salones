@@ -13,7 +13,7 @@ class Curso extends Model
     public static $rules = [
         'nombre' => 'required|string|max:100',
         'profesor' => 'required|string|max:60',
-        'descripcion' => 'string',
+        'descripcion' => 'nullable|string',
     ];
 
     public $timestamps = false;

@@ -4,12 +4,19 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+import Header from './components/header';
+import Cursos from './pages/cursos';
+import Inicio from './pages/inicio';
 
 const Routes = () => {
     return <Router>
+        <Header/>
         <Switch>
             <Route exact path="/">
-                <h1>Hello</h1>
+                <Inicio/>
+            </Route>
+            <Route path="/cursos">
+                <Cursos/>
             </Route>
         </Switch>
     </Router>
