@@ -95,7 +95,10 @@ class SalonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validacion = Validator::make($request->all(),Salon::$rules);
+        $validacion = Validator::make($request->all(), [
+            'nombre' => 'string|unique:salones,nombre|max:45',
+            'max_estudiantes' => 'required|Integer',
+        ]);
 
         if($validacion->fails())
         {
@@ -112,13 +115,16 @@ class SalonController extends Controller
             
         }
 
-        $salon->nombre = $request->nombre;
+        if($request->nombre){
+            $salon->nombre = $request->nombre;
+        }
+
         $salon->max_estudiantes = $request->max_estudiantes;
 
         $salon->save();
 
         return response()->json([
-            'message' => "El salon $request->nombre fue actualizado",
+            'message' => "El salon $salon->nombre fue actualizado",
         ],200);
     }
 

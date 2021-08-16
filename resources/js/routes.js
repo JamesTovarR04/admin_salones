@@ -7,6 +7,7 @@ import {
 import Header from './components/header';
 import Cursos from './pages/cursos';
 import Inicio from './pages/inicio';
+import Salones from './pages/salones';
 
 const Routes = () => {
     return <Router>
@@ -17,6 +18,9 @@ const Routes = () => {
             </Route>
             <Route path="/cursos">
                 <Cursos/>
+            </Route>
+            <Route path="/salones">
+                <Salones/>
             </Route>
         </Switch>
     </Router>

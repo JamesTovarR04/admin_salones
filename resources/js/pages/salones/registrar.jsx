@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import FormularioCurso from './formulario';
+import FormularioSalon from './formulario';
 
-const RegistrarCurso = () => {
-
+const RegistrarSalon = () => {
     const [alerta,setAlerta] = useState({
         view: false,
         status: '',
@@ -11,7 +10,7 @@ const RegistrarCurso = () => {
 
     const handleSubmit =  async (data) => {
 
-        const response = await fetch('/api/cursos',{
+        const response = await fetch('/api/salones',{
             method : 'POST',
             body: JSON.stringify(data),
             headers : {
@@ -25,18 +24,23 @@ const RegistrarCurso = () => {
                 ...alerta,
                 view: true,
                 status: 'success',
-                message: 'Se registró el curso ' + data.nombre
+                message: 'Se registró el salon ' + data.nombre
             });
 
-            return {nombre: '',profesor: ''}
+            return {nombre: '',max_estudiantes: 0}
+        }
 
+        let status = response.status;
+        let error = 'Existen errores en la peticion';
+        if (status == 422){
+            error = 'Errores: ' + ((await response.json()).errors).join(',');
         }
 
         setAlerta({
             ...alerta,
             view: true,
             status: 'danger',
-            message: 'Existen errores en la peticion'
+            message: error
         });
 
         return data;
@@ -51,9 +55,8 @@ const RegistrarCurso = () => {
                 <button type="buttonName" className="btn-close" onClick={() => setAlerta({...alerta, view: false})}></button>
             </div>
         }
-        <FormularioCurso textBtn="Registrar" data={{nombre: '',profesor: ''}} handleSubmit={handleSubmit}/>
+        <FormularioSalon textBtn="Registrar" data={{nombre: '',max_estudiantes: 0}} handleSubmit={handleSubmit}/>
     </>
-
 }
 
-export default RegistrarCurso
+export default RegistrarSalon

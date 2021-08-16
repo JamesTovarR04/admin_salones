@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormularioCurso from './formulario';
+import FormularioSalon from './formulario';
 
-const EditarCurso = () => {
+const EditarSalon = () => {
 
     let { id } = useParams();
 
@@ -15,7 +15,7 @@ const EditarCurso = () => {
 
     useEffect(() => {
 
-        fetch('/api/cursos/' + id,{
+        fetch('/api/salones/' + id,{
             method : 'GET',
             headers : {
                 'Accept' : 'application/json',
@@ -30,9 +30,15 @@ const EditarCurso = () => {
 
     const handleSubmit =  async (dataEdit) => {
 
-        const response = await fetch('/api/cursos/' + id,{
+        let sendData = {...dataEdit};
+
+        if (dataEdit.nombre == data.nombre){
+            delete sendData.nombre;
+        }
+
+        const response = await fetch('/api/salones/' + id,{
             method : 'PUT',
-            body: JSON.stringify(dataEdit),
+            body: JSON.stringify(sendData),
             headers : {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
@@ -48,14 +54,19 @@ const EditarCurso = () => {
             });
 
             return dataEdit;
+        }
 
+        let status = response.status;
+        let error = 'Existen errores en la peticion';
+        if (status == 422){
+            error = 'Errores: ' + ((await response.json()).errors).join(',');
         }
 
         setAlerta({
             ...alerta,
             view: true,
             status: 'danger',
-            message: 'Existen errores en la peticion'
+            message: error
         });
 
         return data;
@@ -70,11 +81,11 @@ const EditarCurso = () => {
                 <button type="buttonName" className="btn-close" onClick={() => setAlerta({...alerta, view: false})}></button>
             </div>
         }
-        { data.id_curso !== undefined &&
-            <FormularioCurso textBtn="Editar" data={data} handleSubmit={handleSubmit}/>
+        { data.id_salon !== undefined &&
+            <FormularioSalon textBtn="Editar" data={data} handleSubmit={handleSubmit}/>
         }
     </>
 
 }
 
-export default EditarCurso
+export default EditarSalon
