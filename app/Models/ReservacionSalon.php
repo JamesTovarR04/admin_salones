@@ -11,8 +11,8 @@ class ReservacionSalon extends Model
     protected $primaryKey = 'id_reservacion';
 
     public static $rules = [
-        'inicio' => 'required|date_format:Y-m-d H:i:s',
-        'fin' => 'required|date_format:Y-m-d H:i:s|after:inicio',
+        'inicio' => 'required|date_format:Y-m-d H:i',
+        'fin' => 'required|date_format:Y-m-d H:i|after:inicio',
         'num_estudiantes' => 'required|integer',
         'id_curso' => 'required|exists:cursos',
         'id_salon' => 'required|exists:salones',

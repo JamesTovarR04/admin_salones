@@ -35,7 +35,7 @@ class ReservacionSalonController extends Controller
 
             if ($num_estudiantes > $salon->max_estudiantes) 
             {
-                return response(['errors' => 'El número de estudiantes es mayor a la capacidad del salón'], 422);
+                return response(['errors' => ['El número de estudiantes es mayor a la capacidad del salón']], 422);
             }
 
             $query = '((fecha_hora_inicio <= ? AND fecha_hora_fin > ?) OR (fecha_hora_inicio < ? AND fecha_hora_fin >= ?) OR (fecha_hora_inicio > ? AND fecha_hora_inicio < ?))';
@@ -48,7 +48,7 @@ class ReservacionSalonController extends Controller
             if (count($cursosCruzados) > 0) 
             {
                 return response([
-                    'errors' => 'existe un cruce de horarios',
+                    'errors' => ['existe un cruce de horarios'],
                     'cruzados' => $cursosCruzados
                 ], 422);
             }
@@ -65,7 +65,8 @@ class ReservacionSalonController extends Controller
      */
     public function index($id_salon)
     {
-        $reservaciones = ReservacionSalon::where('id_salon',$id_salon)->get();
+        $reservaciones = ReservacionSalon::with('curso:id_curso,nombre,profesor')
+                ->where('id_salon',$id_salon)->orderBy('fecha_hora_inicio')->get();
 
         return response()->json([
             'data' => $reservaciones,
